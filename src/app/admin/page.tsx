@@ -1,3 +1,4 @@
+import { Overview } from "@/components/overview"
 import {
   Card,
   CardContent,
@@ -51,6 +52,7 @@ export default async function AdminDashboard() {
     getSalesData(),
     getUserData(),
     getProductData(),
+    
   ])
 
   return (
@@ -72,6 +74,14 @@ export default async function AdminDashboard() {
         subtitle={`${formatNumber(productData.inactiveCount)} Inactive`}
         body={formatNumber(productData.activeCount)}
       />
+      <Card className="col-span-4">
+          <CardHeader>
+            <CardTitle>Overview</CardTitle>
+          </CardHeader>
+          <CardContent className="pl-2">
+            {/* <Overview data={productData} /> */}
+          </CardContent>
+        </Card>
     </div>
   )
 }
