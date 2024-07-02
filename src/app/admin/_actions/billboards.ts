@@ -16,7 +16,7 @@ const addSchema = z.object({
   imageUrl: imageSchema.refine(file => file.size > 0, "Required"),
 })
 
-export async function addProduct(prevState: unknown, formData: FormData) {
+export async function addBillboard(prevState: unknown, formData: FormData) {
   const result = addSchema.safeParse(Object.fromEntries(formData.entries()))
   if (result.success === false) {
     return result.error.formErrors.fieldErrors
@@ -49,7 +49,7 @@ const editSchema = addSchema.extend({
   image: imageSchema.optional(),
 })
 
-export async function updateProduct(
+export async function updateBillboard(
   id: string,
   prevState: unknown,
   formData: FormData
@@ -90,7 +90,7 @@ export async function updateProduct(
 
 
 
-export async function deleteProduct(id: string) {
+export async function deleteBillboard(id: string) {
   const billboard = await db.billboard.delete({ where: { id } })
 
   if (billboard == null) return notFound()

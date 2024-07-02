@@ -1,3 +1,4 @@
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { Button } from "@/components/ui/button"
 import { PageHeader } from "../_components/PageHeader"
 import Link from "next/link"
@@ -26,20 +27,46 @@ import {
 
 export default function AdminProductsPage() {
   return (
-    <>
-      <div className="flex justify-between items-center gap-4">
+    <Tabs
+      defaultValue="view"
+      className="w-full"
+    >
+      <TabsList className="bg-transparent border-b-2 h-16 w-full justify-between mb-4">
         <PageHeader>Products</PageHeader>
-        <Button asChild>
-          <Link href="/admin/products/new">Add Product</Link>
-        </Button>
-      </div>
-      <ProductsTable />
-    </>
+        <div>
+          <TabsTrigger value="view">Physical Products</TabsTrigger>
+          <TabsTrigger value="settings">Digital Products</TabsTrigger>
+        </div>
+      </TabsList>
+      <TabsContent value="view">
+        <>
+          <div className="flex justify-between items-center gap-4">
+            <PageHeader>Physical Products</PageHeader>
+            <Button asChild>
+              <Link href="/admin/products/new">Add Product</Link>
+            </Button>
+          </div>
+          <DigitalProductsTable />
+        </>
+      </TabsContent>
+      <TabsContent value="settings">
+        <>
+          <div className="flex justify-between items-center gap-4">
+            <PageHeader>Digital Products</PageHeader>
+            <Button asChild>
+              <Link href="/admin/products/new">Add Product</Link>
+            </Button>
+          </div>
+          <DigitalProductsTable />
+        </>
+      </TabsContent>
+    </Tabs>
+    
   )
 }
 
-async function ProductsTable() {
-  const products = await db.product.findMany({
+async function DigitalProductsTable() {
+  const products = await db.digitalProduct.findMany({
     select: {
       id: true,
       name: true,
