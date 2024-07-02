@@ -11,7 +11,7 @@ import {
   TableRow,
 } from "@/components/ui/table"
 import db from "@/db/db"
-import { CheckCircle2, MoreVertical, XCircle } from "lucide-react"
+import { CheckCircle2, MoreVertical, Plus, XCircle } from "lucide-react"
 import { formatCurrency, formatNumber } from "@/lib/formatters"
 import {
   DropdownMenu,
@@ -82,7 +82,9 @@ export default async function AdminProductsPage() {
           <div className="flex justify-between items-center gap-4 mb-6">
             <Heading title={`Digital Products (${products.length})`} description="Manage digital products for your store" />
             <Button asChild>
-              <Link href="/admin/products/new">Add Product</Link>
+              <Link href="/admin/products/new">
+                <Plus className="mr-2 h-4 w-4" />Add New
+              </Link>
             </Button>
             
           </div>

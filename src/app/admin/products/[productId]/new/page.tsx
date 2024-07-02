@@ -9,7 +9,14 @@ const ProductPage = async ({
   params: { productId: string, }
 }) => {
 
-  const product = null;
+  const product = await db.product.findUnique({
+    where: {
+      id: params.productId,
+    },
+    include: {
+      images: true,
+    }
+  });
 
   const categories = await db.category.findMany({
     select: {
@@ -47,6 +54,7 @@ const ProductPage = async ({
       className="w-full"
     >
       <TabsList className="bg-transparent border-b-2 h-16 w-full justify-between mb-4">
+        <PageHeader>Products</PageHeader>
         <div>
           <TabsTrigger value="view">Physical Products</TabsTrigger>
           <TabsTrigger value="settings">Digital Products</TabsTrigger>
@@ -61,6 +69,7 @@ const ProductPage = async ({
       </TabsContent>
       <TabsContent value="settings">
         <>
+          <PageHeader>Digital Product</PageHeader>
           <DigitalProductForm />
         </>
       </TabsContent>

@@ -6,12 +6,15 @@ import fs from "fs/promises"
 import { notFound, redirect } from "next/navigation"
 import { revalidatePath } from "next/cache"
 
+
 const fileSchema = z.instanceof(File, { message: "Required" })
 const imageSchema = fileSchema.refine(
   file => file.size === 0 || file.type.startsWith("image/")
 )
 
-const addSchema = z.object({
+
+
+const addDigitalProductSchema = z.object({
   name: z.string().min(1),
   description: z.string().min(1),
   priceInCents: z.coerce.number().int().min(1),
@@ -19,8 +22,10 @@ const addSchema = z.object({
   image: imageSchema.refine(file => file.size > 0, "Required"),
 })
 
-export async function addProduct(prevState: unknown, formData: FormData) {
-  const result = addSchema.safeParse(Object.fromEntries(formData.entries()))
+
+
+export async function addDigitalProduct(prevState: unknown, formData: FormData) {
+  const result = addDigitalProductSchema.safeParse(Object.fromEntries(formData.entries()))
   if (result.success === false) {
     return result.error.formErrors.fieldErrors
   }
@@ -55,12 +60,15 @@ export async function addProduct(prevState: unknown, formData: FormData) {
   redirect("/admin/products")
 }
 
-const editSchema = addSchema.extend({
+
+
+
+const editSchema = addDigitalProductSchema.extend({
   file: fileSchema.optional(),
   image: imageSchema.optional(),
 })
 
-export async function updateProduct(
+export async function updateDigitalProduct(
   id: string,
   prevState: unknown,
   formData: FormData
@@ -120,12 +128,14 @@ export async function toggleProductAvailability(
 }
 
 export async function deleteProduct(id: string) {
-  const product = await db.digitalProduct.delete({ where: { id } })
+  const digitalProduct = await db.digitalProduct.delete({ where: { id } })
+  const product = await db.product.delete({where: { id }})
 
+  if (digitalProduct == null) return notFound()
   if (product == null) return notFound()
 
-  await fs.unlink(product.filePath)
-  await fs.unlink(`public${product.imagePath}`)
+  await fs.unlink(digitalProduct.filePath)
+  await fs.unlink(`public${digitalProduct.imagePath}`)
 
   revalidatePath("/")
   revalidatePath("/products")

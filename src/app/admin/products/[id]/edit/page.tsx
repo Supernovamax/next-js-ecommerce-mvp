@@ -1,18 +1,18 @@
 import db from "@/db/db"
 import { PageHeader } from "../../../_components/PageHeader"
-import { ProductForm } from "../../_components/ProductForm"
+import { DigitalProductForm } from "../../_components/ProductForm"
 
 export default async function EditProductPage({
   params: { id },
 }: {
   params: { id: string }
 }) {
-  const product = await db.product.findUnique({ where: { id } })
+  const product = await db.digitalProduct.findUnique({ where: { id } })
 
   return (
     <>
       <PageHeader>Edit Product</PageHeader>
-      <ProductForm product={product} />
+      <DigitalProductForm digitalproduct={product} />
     </>
   )
 }
