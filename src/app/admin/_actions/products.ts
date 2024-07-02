@@ -38,7 +38,7 @@ export async function addProduct(prevState: unknown, formData: FormData) {
     Buffer.from(await data.image.arrayBuffer())
   )
 
-  await db.product.create({
+  await db.digitalProduct.create({
     data: {
       isAvailableForPurchase: false,
       name: data.name,
@@ -71,7 +71,7 @@ export async function updateProduct(
   }
 
   const data = result.data
-  const product = await db.product.findUnique({ where: { id } })
+  const product = await db.digitalProduct.findUnique({ where: { id } })
 
   if (product == null) return notFound()
 
@@ -92,7 +92,7 @@ export async function updateProduct(
     )
   }
 
-  await db.product.update({
+  await db.digitalProduct.update({
     where: { id },
     data: {
       name: data.name,
@@ -113,14 +113,14 @@ export async function toggleProductAvailability(
   id: string,
   isAvailableForPurchase: boolean
 ) {
-  await db.product.update({ where: { id }, data: { isAvailableForPurchase } })
+  await db.digitalProduct.update({ where: { id }, data: { isAvailableForPurchase } })
 
   revalidatePath("/")
   revalidatePath("/products")
 }
 
 export async function deleteProduct(id: string) {
-  const product = await db.product.delete({ where: { id } })
+  const product = await db.digitalProduct.delete({ where: { id } })
 
   if (product == null) return notFound()
 

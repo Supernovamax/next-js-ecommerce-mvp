@@ -1,5 +1,6 @@
 import { MainNav } from "@/components/Admin-Nav"
 import { Nav, NavLink } from "@/components/Nav"
+import { Separator } from "@/components/ui/separator"
 
 export const dynamic = "force-dynamic"
 
@@ -10,14 +11,8 @@ export default function AdminLayout({
 }>) {
   return (
     <>
-      <Nav>
-        <NavLink href="/admin">Dashboard</NavLink>
-        <NavLink href="/admin/products">Products</NavLink>
-        <NavLink href="/admin/users">Customers</NavLink>
-        <NavLink href="/admin/orders">Sales</NavLink>
-      </Nav>
-      <MainNav className="mx-6"/>
-      <div className="container my-6">{children}</div>
+      <MainNav className="mx-6 p-4"/>
+      <div className="container my-6 mt-24">{children}</div>
     </>
   )
 }

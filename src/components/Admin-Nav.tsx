@@ -4,6 +4,7 @@ import { useParams, usePathname } from "next/navigation";
 
 import { cn } from "@/lib/utils";
 import Link from "next/link";
+import { ModeToggle } from "./mode-toggle";
 
 export function MainNav({
     className,
@@ -17,32 +18,32 @@ export function MainNav({
     {
       href: `/admin`,
       label: 'Overview',
-      active: pathname === `/subaccount/${params.subaccountId}/setup/${params.storeId}`,
+      active: pathname === `/admin`,
     },
     {
-      href: `/subaccount/${params.subaccountId}/setup/${params.storeId}/billboards`,
+      href: `/admin/billboards`,
       label: 'Billboards',
-      active: pathname === `/subaccount/${params.subaccountId}/setup/${params.storeId}/billboards`,
+      active: pathname === `/admin/billboards`,
     },
     {
-      href: `/subaccount/${params.subaccountId}/setup/${params.storeId}/categories`,
+      href: `/admin/categories`,
       label: 'Categories',
-      active: pathname === `/subaccount/${params.subaccountId}/setup/${params.storeId}/categories`,
+      active: pathname === `/admin/categories`,
     },
     {
-      href: `/subaccount/${params.subaccountId}/setup/${params.storeId}/sizes`,
+      href: `/admin/sizes`,
       label: 'Sizes',
-      active: pathname === `/subaccount/${params.subaccountId}/setup/${params.storeId}/sizes`,
+      active: pathname === `/admin/sizes`,
     },
     {
-      href: `/subaccount/${params.subaccountId}/setup/${params.storeId}/colors`,
+      href: `/admin/colors`,
       label: 'Colors',
-      active: pathname === `/subaccount/${params.subaccountId}/setup/${params.storeId}/colors`,
+      active: pathname === `/admin/colors`,
     },
     {
       href: `/admin/products`,
       label: 'Products',
-      active: pathname === `/subaccount/${params.subaccountId}/setup/${params.storeId}/products`,
+      active: pathname === `/admin/products`,
     },
     {
       href: `/admin/orders`,
@@ -50,28 +51,36 @@ export function MainNav({
       active: pathname === `/subaccount/${params.subaccountId}/setup/${params.storeId}/orders`,
     },
     {
-      href: `/subaccount/${params.subaccountId}/setup/${params.storeId}/settings`,
-      label: 'Settings',
-      active: pathname === `/subaccount/${params.subaccountId}/setup/${params.storeId}/settings`,
+      href: `/admin/users`,
+      label: 'Customers',
+      active: pathname === `/admin/users`,
     },
   ]
 
   return (
-    <nav
-      className={cn("flex items-center space-x-4 lg:space-x-6", className)}
-    >
-      {routes.map((route) => (
-        <Link
-          key={route.href}
-          href={route.href}
-          className={cn(
-            "text-sm font-medium transition-colors hover:text-primary",
-            route.active ? "text-black dark:text-white" : "text-muted-foreground"
-          )}
+    <div className="fixed top-0 right-0 left-0 p-4 flex items-center justify-between z-10">
+        <aside className="flex items-center gap-2">
+            <span className="text-xl font-bold"> Inspire.</span>
+        </aside>
+        <nav
+        className={cn("flex items-center space-x-4 lg:space-x-6", className)}
         >
-          {route.label}
-        </Link>
-      ))}
-    </nav>
-  )
-};
+            {routes.map((route) => (
+                <Link
+                    key={route.href}
+                    href={route.href}
+                    className={cn(
+                    "text-sm font-medium transition-colors hover:text-primary",
+                    route.active ? "text-black dark:text-white" : "text-muted-foreground"
+                )}
+                >
+                    {route.label}
+                </Link>
+            ))}
+        </nav>
+        <aside className="flex gap-2 items-center">
+            <ModeToggle />
+      </aside>
+    </div>
+    
+)};
