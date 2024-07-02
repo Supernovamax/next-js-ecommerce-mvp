@@ -1,10 +1,9 @@
 import type { Metadata } from "next"
-import { Inter } from "next/font/google"
+import { DM_Sans } from "next/font/google"
 import "./globals.css"
-import { cn } from "@/lib/utils"
 import { ThemeProvider } from "@/components/theme-provider"
 
-const inter = Inter({ subsets: ["latin"], variable: "--font-sans" })
+const font = DM_Sans({ subsets: ["latin"], variable: "--font-sans" })
 
 export const metadata: Metadata = {
   title: "Digital Marketplace",
@@ -20,7 +19,7 @@ export default function RootLayout({
     <>
       <html lang="en" suppressHydrationWarning>
         <head />
-        <body>
+        <body className={font.className}>
           <ThemeProvider
             attribute="class"
             defaultTheme="system"

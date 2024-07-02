@@ -10,7 +10,7 @@ import db from "@/db/db"
 import { formatCurrency, formatNumber } from "@/lib/formatters"
 
 async function getSalesData() {
-  const data = await db.order.aggregate({
+  const data = await db.digitalOrder.aggregate({
     _sum: { pricePaidInCents: true },
     _count: true,
   })
@@ -24,7 +24,7 @@ async function getSalesData() {
 async function getUserData() {
   const [userCount, orderData] = await Promise.all([
     db.user.count(),
-    db.order.aggregate({
+    db.digitalOrder.aggregate({
       _sum: { pricePaidInCents: true },
     }),
   ])
@@ -38,10 +38,10 @@ async function getUserData() {
   }
 }
 
-async function getProductData() {
+async function getDigitalProductData() {
   const [activeCount, inactiveCount] = await Promise.all([
-    db.product.count({ where: { isAvailableForPurchase: true } }),
-    db.product.count({ where: { isAvailableForPurchase: false } }),
+    db.digitalProduct.count({ where: { isAvailableForPurchase: true } }),
+    db.digitalProduct.count({ where: { isAvailableForPurchase: false } }),
   ])
 
   return { activeCount, inactiveCount }
@@ -51,7 +51,7 @@ export default async function AdminDashboard() {
   const [salesData, userData, productData] = await Promise.all([
     getSalesData(),
     getUserData(),
-    getProductData(),
+    getDigitalProductData(),
     
   ])
 
