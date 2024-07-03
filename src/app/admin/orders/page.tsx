@@ -19,7 +19,7 @@ import { MoreVertical } from "lucide-react"
 import { DeleteDropDownItem } from "./_components/OrderActions"
 
 function getOrders() {
-  return db.order.findMany({
+  return db.digitalOrder.findMany({
     select: {
       id: true,
       pricePaidInCents: true,

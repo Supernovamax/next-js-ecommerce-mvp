@@ -18,7 +18,7 @@ export default async function SuccessPage({
   )
   if (paymentIntent.metadata.productId == null) return notFound()
 
-  const product = await db.product.findUnique({
+  const product = await db.digitalProduct.findUnique({
     where: { id: paymentIntent.metadata.productId },
   })
   if (product == null) return notFound()

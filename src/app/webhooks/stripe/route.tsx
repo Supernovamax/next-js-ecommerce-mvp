@@ -20,7 +20,7 @@ export async function POST(req: NextRequest) {
     const email = charge.billing_details.email
     const pricePaidInCents = charge.amount
 
-    const product = await db.product.findUnique({ where: { id: productId } })
+    const product = await db.digitalProduct.findUnique({ where: { id: productId } })
     if (product == null || email == null) {
       return new NextResponse("Bad Request", { status: 400 })
     }

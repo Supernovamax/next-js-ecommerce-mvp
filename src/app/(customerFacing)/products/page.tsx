@@ -4,7 +4,7 @@ import { cache } from "@/lib/cache"
 import { Suspense } from "react"
 
 const getProducts = cache(() => {
-  return db.product.findMany({
+  return db.digitalProduct.findMany({
     where: { isAvailableForPurchase: true },
     orderBy: { name: "asc" },
   })
